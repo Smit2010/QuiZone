@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "447966580659",
+    "firebase_url": "https://quizone-sj7.firebaseio.com",
+    "project_id": "quizone-sj7",
+    "storage_bucket": "quizone-sj7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447966580659:android:40aa000e17b9bf9b",
+        "android_client_info": {
+          "package_name": "com.example.smit.quizone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447966580659-rm0r7o36r0fc1coj03gvrqv7gemfa0qb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smit.quizone",
+            "certificate_hash": "4278b523c5ee52312d1bf05d4e07cd5989d1390d"
+          }
+        },
+        {
+          "client_id": "447966580659-t8b7l1unmjb4n250f9chf2n498jbrd9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB421FTpfXwhNViNnMOIsuSe015uqh3nAQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447966580659-t8b7l1unmjb4n250f9chf2n498jbrd9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
