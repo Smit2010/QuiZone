@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">QuiZone</string>
     <string name="sign_up"><u>New User? Click here to Sign Up.</u></string>
+    <string name="log_out">Log-Out</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
