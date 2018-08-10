@@ -6,18 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,7 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
-public class loginActivity extends AppCompatActivity {
+public class signUpActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private SignInButton mGoogleBtn;
@@ -45,27 +42,17 @@ public class loginActivity extends AppCompatActivity {
     private static final String EMAIL = "email";
     private static int RC_SIGN_IN = 1;
     private static String TAG = "TAG";
-    private Button SignUp;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        SignUp = findViewById(R.id.signUp);
-        SignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent signUp = new Intent(loginActivity.this,signUpActivity.class);
-                startActivity(signUp);
-            }
-        });
+        setContentView(R.layout.activity_sign_up);
 
         mAuth = FirebaseAuth.getInstance();
 
-        mGoogleBtn = findViewById(R.id.googleBtn2);
-        progressBar = findViewById(R.id.progress_bar2);
+        mGoogleBtn = findViewById(R.id.googleBtn);
+        progressBar = findViewById(R.id.progress_bar);
         mGoogleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +70,7 @@ public class loginActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-                    Intent intent = new Intent(loginActivity.this, homeActivity.class);
+                    Intent intent = new Intent(signUpActivity.this, homeActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -93,7 +80,7 @@ public class loginActivity extends AppCompatActivity {
                 .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Toast.makeText(loginActivity.this, "Connection Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(signUpActivity.this, "Connection Failed", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
@@ -181,7 +168,7 @@ public class loginActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if(!task.isSuccessful()){
-                                                    Toast.makeText(loginActivity.this,"Error occured", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(signUpActivity.this,"Error occured", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
@@ -196,7 +183,7 @@ public class loginActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(loginActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(signUpActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
 
                         }
                     }
