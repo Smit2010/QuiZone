@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -33,7 +35,7 @@ import java.util.HashMap;
 
 public class signUpActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
     private SignInButton mGoogleBtn;
     private DatabaseReference mDataBase;
     private GoogleApiClient mGoogleApi;
@@ -42,6 +44,9 @@ public class signUpActivity extends AppCompatActivity {
     private static final String EMAIL = "email";
     private static int RC_SIGN_IN = 1;
     private static String TAG = "TAG";
+    public Button create;
+    EditText user,Email,passWord;
+    String User,eMail,PassWord;
 
 
     @Override
@@ -49,7 +54,28 @@ public class signUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        user = findViewById(R.id.userName);
+        Email = findViewById(R.id.email2);
+        passWord = findViewById(R.id.password2);
+
+
+
         mAuth = FirebaseAuth.getInstance();
+
+        create = findViewById(R.id.signup2);
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                User = user.getText().toString();
+                eMail = Email.getText().toString();
+                PassWord = passWord.getText().toString();
+                createAccount(eMail,PassWord);
+
+                /*else{
+                    Toast.makeText(signUpActivity.this, "Enter E-Mail or Password", Toast.LENGTH_SHORT).show();
+                }*/
+            }
+        });
 
         mGoogleBtn = findViewById(R.id.googleBtn);
         progressBar = findViewById(R.id.progress_bar);
@@ -85,14 +111,45 @@ public class signUpActivity extends AppCompatActivity {
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
+
+
     }
 
-    @Override
+
+
+    /*@Override
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListner);
         FirebaseUser currentUser = mAuth.getCurrentUser();
+    }*/
+
+    public void createAccount(String email,String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            //Toast.makeText(signUpActivity.this, "", Toast.LENGTH_SHORT).show();
+                            Intent create = new Intent(signUpActivity.this, homeActivity.class);
+                            startActivity(create);
+                            finish();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(signUpActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
     }
+
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApi);

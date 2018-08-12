@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -45,13 +46,19 @@ public class loginActivity extends AppCompatActivity {
     private static final String EMAIL = "email";
     private static int RC_SIGN_IN = 1;
     private static String TAG = "TAG";
-    private Button SignUp;
+    private Button SignUp,logIn;
+    EditText mail,passWord;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mail = findViewById(R.id.email);
+        passWord = findViewById(R.id.password);
+
+
 
         SignUp = findViewById(R.id.signUp);
         SignUp.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +70,23 @@ public class loginActivity extends AppCompatActivity {
         });
 
         mAuth = FirebaseAuth.getInstance();
+
+        logIn = findViewById(R.id.login);
+        logIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String email = mail.getText().toString();
+                final String PassWord = passWord.getText().toString();
+                if(email.length() > 0 && PassWord.length() > 0) {
+                    LogIn(email, PassWord);
+                    Intent signUp = new Intent(loginActivity.this, signUpActivity.class);
+                    startActivity(signUp);
+                }
+                else{
+                    Toast.makeText(loginActivity.this, "Enter E-Mail or Password", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         mGoogleBtn = findViewById(R.id.googleBtn2);
         progressBar = findViewById(R.id.progress_bar2);
@@ -100,11 +124,37 @@ public class loginActivity extends AppCompatActivity {
                 .build();
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListner);
         FirebaseUser currentUser = mAuth.getCurrentUser();
+    }
+
+    private void LogIn(String email, String passWord) {
+        mAuth.signInWithEmailAndPassword(email, passWord)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            //Toast.makeText(loginActivity.this, "" + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(loginActivity.this,homeActivity.class));
+                            finish();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(loginActivity.this, "Incorrect E-Mail or Password",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
+
     }
 
     private void signIn() {
