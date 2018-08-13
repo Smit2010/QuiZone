@@ -79,8 +79,6 @@ public class loginActivity extends AppCompatActivity {
                 final String PassWord = passWord.getText().toString();
                 if(email.length() > 0 && PassWord.length() > 0) {
                     LogIn(email, PassWord);
-                    Intent signUp = new Intent(loginActivity.this, signUpActivity.class);
-                    startActivity(signUp);
                 }
                 else{
                     Toast.makeText(loginActivity.this, "Enter E-Mail or Password", Toast.LENGTH_SHORT).show();
@@ -141,7 +139,7 @@ public class loginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //Toast.makeText(loginActivity.this, "" + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(loginActivity.this, "", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(loginActivity.this,homeActivity.class));
                             finish();
                         } else {

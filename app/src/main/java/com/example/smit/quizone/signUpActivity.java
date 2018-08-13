@@ -69,11 +69,12 @@ public class signUpActivity extends AppCompatActivity {
                 User = user.getText().toString();
                 eMail = Email.getText().toString();
                 PassWord = passWord.getText().toString();
-                createAccount(eMail,PassWord);
-
-                /*else{
+                if(eMail.length()>0 && PassWord.length()>0 && User.length()>0) {
+                    createAccount(eMail, PassWord, User);
+                }
+                else{
                     Toast.makeText(signUpActivity.this, "Enter E-Mail or Password", Toast.LENGTH_SHORT).show();
-                }*/
+                }
             }
         });
 
@@ -118,14 +119,14 @@ public class signUpActivity extends AppCompatActivity {
 
 
 
-    /*@Override
+    @Override
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListner);
         FirebaseUser currentUser = mAuth.getCurrentUser();
-    }*/
+    }
 
-    public void createAccount(String email,String password) {
+    public void createAccount(final String email, final String password, final String User) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -133,21 +134,58 @@ public class signUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            //Toast.makeText(signUpActivity.this, "", Toast.LENGTH_SHORT).show();
-                            Intent create = new Intent(signUpActivity.this, homeActivity.class);
-                            startActivity(create);
-                            finish();
+                            final FirebaseUser user = mAuth.getCurrentUser();
+
+                            user.sendEmailVerification()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d(TAG, "Email sent.");
+
+                                                if (user.isEmailVerified()){
+                                                Toast.makeText(signUpActivity.this, "" + User, Toast.LENGTH_SHORT).show();
+                                                Intent create = new Intent(signUpActivity.this, homeActivity.class);
+                                                startActivity(create);
+                                                finish();
+
+                                                mDataBase = FirebaseDatabase.getInstance().getReference();
+                                                final DatabaseReference mRef2 = mDataBase.child("Users");
+
+                                                HashMap<String, String> datamap = new HashMap<>();
+                                                datamap.put("Name", User);
+                                                datamap.put("Email", email);
+                                                datamap.put("Password", password);
+                                                DatabaseReference userData = mRef2.push();
+                                                userData.setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (!task.isSuccessful()) {
+                                                            Toast.makeText(signUpActivity.this, "Error occured", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                            }
+                                        }
+                                    });
+
+
+
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(signUpActivity.this, "Authentication failed.",
+                            Toast.makeText(signUpActivity.this, "Invalid E-Mail or Password",
                                     Toast.LENGTH_SHORT).show();
                         }
 
                         // ...
                     }
                 });
+
+
+
     }
 
 
