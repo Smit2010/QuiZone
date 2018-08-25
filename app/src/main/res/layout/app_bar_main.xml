@@ -7,6 +7,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".homeActivity">
 
+
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,12 +25,64 @@
         <!--app:popupTheme="@style/Theme.AppCompat.Light"-->
 
     </android.support.design.widget.AppBarLayout>
-    <TextView
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HOME"
-        android:textSize="50dp"
-        android:textColor="@android:color/black"
-        android:layout_gravity="center"/>
+        android:orientation="vertical"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome to QuiZone"
+            android:layout_gravity="center"
+            android:textSize="40dp"
+            android:textColor="@android:color/black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:textSize="18dp"
+            android:textColor="@android:color/black"
+            android:text="-This is basically a quizzing app and you will have categories to choose from, in which to test your knowledge."/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:textSize="18dp"
+            android:text="-Your each correct response will gain you 5 points and for every wrong answer 1 point will be deducted."
+            android:textColor="@android:color/black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:textSize="18dp"
+            android:text="-At the end your total score will be seen in your Dashboard."
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:id="@+id/categories"
+            android:clickable="true"
+            android:textColor="@android:color/black"
+            android:text="View Categories to play Quiz"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            />
+
+
+    </LinearLayout>
+
+
 
 </android.support.design.widget.CoordinatorLayout>

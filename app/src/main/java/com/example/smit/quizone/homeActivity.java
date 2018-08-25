@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,12 +32,21 @@ public class homeActivity extends AppCompatActivity implements NavigationView.On
     android.support.v7.widget.Toolbar toolbar;
 
     private GoogleApiClient mGoogleApi;
+    TextView Categories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setNavigationViewListener();
+
+        Categories = findViewById(R.id.categories);
+        Categories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(homeActivity.this,Categories.class));
+            }
+        });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail().build();
@@ -107,6 +117,10 @@ public class homeActivity extends AppCompatActivity implements NavigationView.On
                             }
                         });
                 break;
+            }
+
+            case R.id.profile:{
+                startActivity(new Intent(homeActivity.this,ProfileActivity.class));
             }
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);

@@ -141,7 +141,7 @@ public class signUpActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                Log.d(TAG, "Email sent.");
+                                                Log.d(TAG, "Email sent.");  
 
                                                 if (user.isEmailVerified()){
                                                 Toast.makeText(signUpActivity.this, "" + User, Toast.LENGTH_SHORT).show();
